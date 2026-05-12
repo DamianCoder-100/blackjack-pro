@@ -1,3 +1,73 @@
+function createStarField() {
+    const starsContainer = document.getElementById('stars-bg');
+    if (!starsContainer) return;
+    
+    starsContainer.innerHTML = '';
+
+    // ===== 10 LAMPS =====
+    const lampConfig = {
+        count: 10,
+        startPos: 5,
+        spacing: 9.5,
+    };
+    
+    for (let i = 0; i < lampConfig.count; i++) {
+        const lamp = document.createElement('div');
+        lamp.className = 'streetlamp';
+        lamp.dataset.index = i;
+        lamp.style.right = (lampConfig.startPos + i * lampConfig.spacing) + '%';
+        lamp.style.animationDelay = i * 0.1 + 's';
+        lamp.innerHTML = `
+            <div class="lamp-post"></div>
+            <div class="lamp-head"></div>
+            <div class="light-cone"></div>
+            <div class="light-glow"></div>
+        `;
+        starsContainer.appendChild(lamp);
+    }
+
+
+    
+    // ===== CAR WITH BOUNCE =====
+    // ===== CAR - INFINITE LOOP =====
+const car = document.createElement('img');
+car.src = 'pictures/car&wheels.png';
+car.className = 'driving-car';
+car.alt = 'car';
+starsContainer.appendChild(car);
+
+// Start driving immediately when dark mode is on
+if (document.body.classList.contains('dark')) {
+    car.classList.add('drive-infinite');
+}
+    // Clouds
+    const cloudImages = ['cloud_five', 'cloud_four', 'cloud_three'];
+    for (let i = 0; i < 5; i++) {
+        const cloud = document.createElement('img');
+        cloud.className = 'cloud';
+        cloud.src = `pictures/${cloudImages[Math.floor(Math.random() * 3)]}.png`;
+        cloud.style.top = Math.random() * 55 + 10 + '%';
+        cloud.style.width = Math.random() * 160 + 120 + 'px';
+        cloud.style.opacity = Math.random() * 0.35 + 0.25;
+        cloud.style.animationDelay = Math.random() * 30 + 's';
+        cloud.style.animationDuration = Math.random() * 80 + 90 + 's';
+        starsContainer.appendChild(cloud);
+    }
+    
+    // Stars
+    for (let i = 0; i < 200; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 60 + '%';
+        const size = Math.random() * 2 + 1;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        starsContainer.appendChild(star);
+    }
+}
+
 const dealBtn = document.getElementById('deal-btn');
 const hitBtn = document.getElementById('hit-btn');
 const standBtn = document.getElementById('stand-btn');
@@ -26,6 +96,26 @@ const soundSettings = {
 };
 let audioCtx = null;
 
+// function applyTheme(theme) {
+//     document.body.classList.toggle('dark', theme === 'dark');
+//     document.body.classList.toggle('light', theme === 'light');
+//     themeIcon.src = theme === 'dark' ? 'pictures/moon1319.png' : 'pictures/sun59569.png';
+//     themeIcon.alt = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+//     themeToggleBtn.classList.toggle('showing-sun', theme === 'light');
+//     localStorage.setItem('blackjack-theme', theme);
+    
+//     if (theme === 'dark') {
+//         setTimeout(() => {
+//             const car = document.querySelector('.driving-car');
+//             if (car) {
+//                 car.classList.remove('drive-in');
+//                 void car.offsetWidth;
+//                 car.classList.add('drive-in');
+//             }
+//         }, 500);
+//     }
+// }
+
 function applyTheme(theme) {
     document.body.classList.toggle('dark', theme === 'dark');
     document.body.classList.toggle('light', theme === 'light');
@@ -33,6 +123,15 @@ function applyTheme(theme) {
     themeIcon.alt = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
     themeToggleBtn.classList.toggle('showing-sun', theme === 'light');
     localStorage.setItem('blackjack-theme', theme);
+    
+    const car = document.querySelector('.driving-car');
+    if (car) {
+        if (theme === 'dark') {
+            car.classList.add('drive-infinite');
+        } else {
+            car.classList.remove('drive-infinite');
+        }
+    }
 }
 
 function toggleTheme() {
@@ -40,73 +139,9 @@ function toggleTheme() {
     applyTheme(nextTheme);
 }
 
-function createStarField() {
-    const starsContainer = document.getElementById('stars-bg');
-    if (!starsContainer) return;
-    
-    starsContainer.innerHTML = '';
-
-    // Create a moon behind the clouds
-    const moon = document.createElement('div');
-    moon.className = 'moon';
-    moon.style.left = '68%';
-    moon.style.top = '10%';
-    moon.style.width = '180px';
-    moon.style.height = '180px';
-    starsContainer.appendChild(moon);
-    
-    // Generate 5 floating clouds
-    const cloudImages = ['cloud_five', 'cloud_four', 'cloud_three'];
-    for (let i = 0; i < 5; i++) {
-        const cloud = document.createElement('img');
-        cloud.className = 'cloud';
-        cloud.src = `pictures/${cloudImages[Math.floor(Math.random() * 3)]}.png`;
-        cloud.style.top = Math.random() * 55 + 10 + '%';
-        cloud.style.width = Math.random() * 160 + 120 + 'px';
-        cloud.style.opacity = Math.random() * 0.35 + 0.25;
-        cloud.style.animationDelay = Math.random() * 30 + 's';
-        cloud.style.animationDuration = Math.random() * 80 + 90 + 's';
-        cloud.style.animationTimingFunction = 'ease-in-out';
-        starsContainer.appendChild(cloud);
-    }
-    
-    // Generate 200 static twinkling stars
-    for (let i = 0; i < 200; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        
-        // Random position
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        
-        // Random size: 1-3px
-        const size = Math.random() * 2 + 1;
-        star.style.width = size + 'px';
-        star.style.height = size + 'px';
-        
-        // Random animation delay so they don't all twinkle together
-        star.style.animationDelay = Math.random() * 3 + 's';
-        star.style.animationDuration = (Math.random() * 2 + 2) + 's';
-        
-        starsContainer.appendChild(star);
-    }
-    
-    // Add 3 shooting stars with random delays
-    for (let i = 0; i < 3; i++) {
-        const shootingStar = document.createElement('div');
-        shootingStar.className = 'shooting-star';
-        shootingStar.style.left = (Math.random() * 50 + 50) + '%';
-        shootingStar.style.top = Math.random() * 50 + '%';
-        shootingStar.style.animationDelay = (Math.random() * 10 + 2) + 's';
-        shootingStar.style.animationDuration = (Math.random() * 2 + 2) + 's';
-        starsContainer.appendChild(shootingStar);
-    }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     createStarField();
     
-    // Your existing theme code...
     const savedTheme = localStorage.getItem('blackjack-theme');
     const defaultTheme = savedTheme || 'dark';
     applyTheme(defaultTheme);
@@ -147,30 +182,30 @@ function playTone(freq, duration, type = 'sine', gainValue = 0.15, when = 0) {
 function playSound(type) {
     if (type === 'chip') {
         const audio = new Audio('sounds/chips5.wav');
-        audio.play().catch(() => {}); // Ignore errors if audio fails
+        audio.play().catch(() => {});
         return;
     }
 
     if (type === 'blackjack') {
         const audio = new Audio('sounds/you-win.mp3');
-        audio.play().catch(() => {}); // Ignore errors if audio fails
+        audio.play().catch(() => {});
         return;
     }
 
     if (type === 'win') {
         const audio = new Audio('sounds/cheer.mp3');
-        audio.play().catch(() => {}); // Ignore errors if audio fails
+        audio.play().catch(() => {});
         return;
     }
 
     if (type === 'gameover') {
         const audio = new Audio('sounds/game-over.mp3');
-        audio.play().catch(() => {}); // Ignore errors if audio fails
+        audio.play().catch(() => {});
         return;
     }
     if (type === 'lose') {
-        const audio = new Audio('sounds/boo.mp3');
-        audio.play().catch(() => {}); // Ignore errors if audio fails
+        const audio = new Audio('sounds/you-lose.mp3');
+        audio.play().catch(() => {});
         return;
     }
 
@@ -302,14 +337,17 @@ function updateChipActiveState() {
     });
 }
 
-function resetBoard() {
+function resetBoard(forceNewGame = false) {
     state.deck = shuffle(createDeck());
     state.player = [];
     state.dealer = [];
     state.roundActive = false;
     state.roundOver = true;
     state.currentBet = 0;
-    state.balance = 1000;
+    
+    if (forceNewGame || state.balance <= 0) {
+        state.balance = 1000;
+    }
 
     renderHands();
     setMessage('Select chips to set your bet, then press Deal.');
@@ -544,6 +582,6 @@ if (themeToggleBtn) {
 dealBtn.addEventListener('click', dealRound);
 hitBtn.addEventListener('click', hit);
 standBtn.addEventListener('click', stand);
-resetBtn.addEventListener('click', resetBoard);
+resetBtn.addEventListener('click', () => resetBoard(true));
 
 resetBoard();

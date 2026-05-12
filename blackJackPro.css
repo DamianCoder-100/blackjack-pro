@@ -211,7 +211,7 @@ body.dark .header h1 {
 }
 
 .wallet {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 18px;
     padding: 12px 16px;
@@ -244,7 +244,7 @@ body.dark .header h1 {
 
 .chip {
     position: relative;
-    width: 55px;
+    width: 5px;
     height: 55px;
     aspect-ratio: 1 / 1;
     overflow: hidden;
@@ -261,7 +261,7 @@ body.dark .header h1 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: rgb(247, 249, 247);
 }
 
 .chip-face {
@@ -277,7 +277,7 @@ body.dark .header h1 {
     color: inherit;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     background: transparent;
-    border-radius: 50%;
+    /* border-radius: 50%; */
     overflow: hidden;
 }
 
@@ -296,7 +296,7 @@ body.dark .header h1 {
 }
 
 .chip.active {
-    border: 3px solid #ffd700;
+    /* border: 3px solid #ffd700; */
     box-shadow:
         0 4px 8px rgba(0, 0, 0, 0.4),
         inset 0 2px 4px rgba(255, 255, 255, 0.3),
@@ -454,7 +454,7 @@ button#reset-btn {
 .stars-container {
     position: fixed;
     inset: 0;
-    z-index: 0;
+    z-index: -1;
     pointer-events: none;
     overflow: hidden;
     opacity: 0;
@@ -523,7 +523,8 @@ body.dark .stars-container {
 /* Make sure game content is above stars */
 .game-container {
     position: relative;
-    z-index: 1;
+    top: -100px;
+    z-index: 10;
 }
 
 @media (max-width: 760px) {
@@ -535,3 +536,312 @@ body.dark .stars-container {
         height: 88px;
     }
 }
+
+
+/* ===== STREETLAMP ===== */
+.streetlamp {
+    position: absolute;
+    bottom: 0;
+    right: 15%;
+    width: 80px;
+    height: 300px;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+body.dark .streetlamp {
+    opacity: 1;
+}
+
+/* The pole */
+.lamp-post {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 220px;
+    background: linear-gradient(90deg, #2c3e50, #34495e, #2c3e50);
+    border-radius: 4px;
+    box-shadow: 2px 0 4px rgba(0,0,0,0.4);
+}
+
+/* The lamp head */
+.lamp-head {
+    position: absolute;
+    bottom: 220px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 30px;
+    background: #1a252f;
+    border-radius: 8px 8px 4px 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+/* The light bulb glow */
+.light-glow {
+    position: absolute;
+    bottom: 215px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, #fff9c4, #ffd700);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 20px #ffd700,
+        0 0 40px rgba(255, 215, 0, 0.6),
+        0 0 80px rgba(255, 215, 0, 0.3);
+    animation: flicker 4s infinite alternate;
+}
+
+/* FIXED: Light cone - narrow at top, wide at bottom */
+.light-cone {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 240px;  /* Wide at bottom */
+    height: 220px;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 248, 220, 0.25) 0%,  /* Bright at top near bulb */
+        rgba(255, 248, 220, 0.15) 30%,
+        rgba(255, 248, 220, 0.08) 60%,
+        transparent 100%              /* Fade out at ground */
+    );
+    clip-path: polygon(45% 0%, 55% 0%, 100% 100%, 0% 100%); /* Trapezoid shape */
+    filter: blur(12px);
+    pointer-events: none;
+}
+
+/* Extra glow at the top of cone near bulb */
+.light-cone::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 40px;
+    background: radial-gradient(
+        ellipse at 50% 0%, 
+        rgba(255, 248, 220, 0.4) 0%, 
+        transparent 70%
+    );
+    filter: blur(8px);
+}
+
+@keyframes flicker {
+    0%, 100% { 
+        opacity: 1; 
+        box-shadow: 
+            0 0 20px #ffd700,
+            0 0 40px rgba(255, 215, 0, 0.6),
+            0 0 80px rgba(255, 215, 0, 0.3);
+    }
+    50% { 
+        opacity: 0.9; 
+        box-shadow: 
+            0 0 15px #ffd700,
+            0 0 30px rgba(255, 215, 0, 0.5),
+            0 0 60px rgba(255, 215, 0, 0.2);
+    }
+}
+
+ .streetlamp {
+    position: absolute;
+    bottom: 0;
+    right: 15%;
+    width: 80px;
+    height: 300px;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+body.dark .streetlamp {
+    opacity: 1;
+}
+
+/* The pole */
+.lamp-post {
+    position: absolute;
+    bottom: 17px;
+    right: -173px;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 170px;
+    background: linear-gradient(90deg, #2c3e50, #34495e, #2c3e50);
+    border-radius: 4px;
+    box-shadow: 2px 0 4px rgba(0,0,0,0.4);
+}
+
+/* The lamp head */
+.lamp-head {
+    position: absolute;
+    bottom: 159px;
+    right: -188px;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 30px;
+    background: #1a252f;
+    border-radius: 8px 8px 4px 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+/* The light bulb glow */
+.light-glow {
+    position: absolute;
+    bottom: 149px;
+    right: -168px;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, #fff9c4, #ffd700);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 20px #ffd700,
+        0 0 40px rgba(255, 215, 0, 0.6),
+        0 0 80px rgba(255, 215, 0, 0.3);
+    animation: flicker 4s infinite alternate;
+}
+
+/* The light cone shining down */
+.light-cone {
+    position: absolute;
+    bottom: 1px;
+    right: -398px;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 120px solid transparent;
+    border-right: 120px solid transparent;
+    border-top: 220px solid rgba(255, 248, 220, 0.12);
+    filter: blur(8px);
+    pointer-events: none;
+}
+
+.light-cone::before {
+    content: '';
+    position: absolute;
+    top: -220px;
+    left: -120px;
+    width: 240px;
+    height: 220px;
+    background: radial-gradient(
+        ellipse at 50% 0%, 
+        rgba(255, 248, 220, 0.2) 0%, 
+        rgba(255, 248, 220, 0.411) 40%,
+        transparent 70%
+    );
+}
+
+/* Subtle flicker animation */
+@keyframes flicker {
+    0%, 100% { 
+        opacity: 1; 
+        box-shadow: 
+            0 0 20px #ffd700,
+            0 0 40px rgba(255, 215, 0, 0.6),
+            0 0 80px rgba(255, 215, 0, 0.3);
+    }
+    50% { 
+        opacity: 0.9; 
+        box-shadow: 
+            0 0 15px #ffd700,
+            0 0 30px rgba(255, 215, 0, 0.5),
+            0 0 60px rgba(255, 215, 0, 0.2);
+    }
+}
+
+/* Make table look lit by the lamp */
+body.dark .table-image {
+    filter: drop-shadow(-40px 0 60px rgba(255, 248, 220, 0.15));
+}
+
+
+
+  .table-image {
+   
+   background: url("pictures/daytime-city42281.png") center/cover no-repeat;
+    z-index: 11;
+  }
+
+
+
+.driving-car {
+    position: fixed;
+    bottom: 40px;
+    right: -400px;
+    width: 250px;
+    height: auto;
+    z-index: -6;
+    opacity: 0;
+    pointer-events: none;
+}
+
+body.dark .driving-car {
+    opacity: 1;
+}
+
+@keyframes drive-bounce {
+    0% { transform: translateX(0); }
+    60% { transform: translateX(calc(-100vw - 500px)); }
+    70% { transform: translateX(calc(-100vw - 450px)) translateY(-15px); }
+    80% { transform: translateX(calc(-100vw - 500px)) translateY(0); }
+    90% { transform: translateX(calc(-100vw - 480px)) translateY(-8px); }
+    100% { transform: translateX(calc(-100vw - 500px)) translateY(0); }
+}
+
+.driving-car.drive-in {
+    animation: drive-bounce 20s ease-out forwards;
+}
+
+
+
+.driving-car {
+    position: fixed;
+    bottom: 40px;
+    right: -400px;
+    width: 250px;
+    height: auto;
+    z-index: -6;
+    opacity: 0;
+    pointer-events: none;
+}
+
+body.dark .driving-car {
+    opacity: 1;
+}
+
+/* Infinite drive-by with bounce each loop */
+@keyframes drive-loop {
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+    70% {
+        transform: translateX(calc(-100vw - 500px)) translateY(0);
+    }
+    75% {
+        transform: translateX(calc(-100vw - 450px)) translateY(-15px); /* Bounce up */
+    }
+    80% {
+        transform: translateX(calc(-100vw - 500px)) translateY(0); /* Slam down */
+    }
+    85% {
+        transform: translateX(calc(-100vw - 480px)) translateY(-8px); /* Small bounce */
+    }
+    90% {
+        transform: translateX(calc(-100vw - 500px)) translateY(0); /* Settle */
+    }
+    100% {
+        transform: translateX(calc(-100vw - 800px)) translateY(0); /* Drive off left */
+    }
+}
+
+.driving-car.drive-infinite {
+    animation: drive-loop 10s linear infinite;
+} 

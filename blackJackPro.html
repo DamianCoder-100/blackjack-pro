@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack Pro</title>
+    <link rel="stylesheet" href="blackJackPro.css">
+</head>
+<body>
+    <div class="stars-container" id="stars-bg"></div>
+    <div class="app-shell game-container">
+        <header class="header">
+            <div class="header-top">
+                <div>
+                    <h1>Blackjack Pro</h1>
+                    <p>Play a quick round against the dealer. Bet with chips and watch the deck reshuffle only when 15 cards remain.</p>
+                </div>
+                <div class="theme-switcher">
+                    <button id="theme-toggle" type="button" aria-label="Toggle theme">
+                        <img id="theme-icon" src="pictures/moon1319.png" alt="Toggle theme">
+                    </button>
+                </div>
+            </div>
+        </header>
+        <main class="game-board">
+            <section class="hand-panel dealer-panel">
+                <h2>Dealer</h2>
+                <div id="dealer-cards" class="cards"></div>
+                <div class="score">Score: <span id="dealer-score">0</span></div>
+            </section>
+            <section class="hand-panel player-panel">
+                <h2>You</h2>
+                <div id="player-cards" class="cards"></div>
+                <div class="score">Score: <span id="player-score">0</span></div>
+            </section>
+        </main>
+        <section class="betting">
+            <div class="bet-info">
+                <div class="wallet">Bankroll: <strong id="balance-display">$1000.00</strong></div>
+                <div class="wallet">Current Bet: <strong id="bet-display">$0.00</strong></div>
+            </div>
+            <div class="chip-tray" id="chip-buttons">
+                <button class="chip chip-5" data-value="5">
+                    <div class="chip-face">$5</div>
+                </button>
+                <button class="chip chip-10" data-value="10">
+                    <div class="chip-face">$10</div>
+                </button>
+                <button class="chip chip-25" data-value="25">
+                    <div class="chip-face">$25</div>
+                </button>
+                <button class="chip chip-50" data-value="50">
+                    <div class="chip-face">$50</div>
+                </button>
+                <button class="chip chip-100" data-value="100">
+                    <div class="chip-face">$100</div>
+                </button>
+                <button class="chip chip-clear" data-value="clear">
+                    <div class="chip-face">CLR</div>
+                </button>
+            </div>
+        </section>
+        <section class="controls">
+            <div class="button-row">
+                <button id="deal-btn" disabled>Deal</button>
+                <button id="hit-btn" disabled>Hit</button>
+                <button id="stand-btn" disabled>Stand</button>
+                <button id="reset-btn">Reset</button>
+            </div>
+            <div class="status">
+                <p id="message">Select chips to set your bet, then press Deal.</p>
+            </div>
+        </section>
+        <img src="pictures/car&wheels.png" id="driving-car" class="driving-car" alt="car">
+    </div>
+    <script src="blackJackPro.js"></script>
+</body>
+</html>
