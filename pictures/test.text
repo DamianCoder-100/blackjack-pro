@@ -1,1 +1,239 @@
 
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    padding: 10px;
+}
+
+/* ===== CHIP TRAY ===== */
+.chip-tray {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 15px;
+    padding: 0;
+    background: transparent;
+}
+
+.chip {
+    position: relative;
+    width: 55px;
+    height: 55px;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 3px dashed rgba(255, 255, 255, 0.5);
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(247, 249, 247);
+}
+
+.chip-face {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-family: 'Arial Black', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: inherit;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    background: transparent;
+    /* border-radius: 50%; */
+    overflow: hidden;
+}
+
+.chip:hover:not(:disabled) {
+    transform: translateY(-4px) scale(1.1);
+}
+
+.chip:active:not(:disabled) {
+    transform: translateY(-1px) scale(1.05);
+}
+
+.chip:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    filter: grayscale(100%);
+}
+
+.chip.active {
+    /* border: 3px solid #ffd700; */
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+        0 0 0 2px rgba(255, 215, 0, 0.5),
+        0 0 12px rgba(255, 215, 0, 0.4);
+}
+
+.chip-5 {
+    background: radial-gradient(circle, #ff4444, #cc0000);
+    color: white;
+}
+
+.chip-10 {
+    background: radial-gradient(circle, #ff8844, #cc4400);
+    color: white;
+}
+
+.chip-25 {
+    background: radial-gradient(circle, #44ff44, #00cc00);
+    color: white;
+}
+
+.chip-50 {
+    background: radial-gradient(circle, #4444ff, #0000cc);
+    color: white;
+}
+
+.chip-100 {
+    background: radial-gradient(circle, #aa44ff, #6600cc);
+    color: white;
+}
+
+.chip-clear {
+    background: linear-gradient(145deg, #95a5a6, #7f8c8d);
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+}
+
+.chip-clear .chip-face {
+    font-size: 14px;
+    background: transparent;
+    border-radius: 50%;
+}
+
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    padding: 10px;
+}
+
+/* ===== CHIP TRAY ===== */
+.chip-tray {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 15px;
+    padding: 0;
+    background: transparent;
+}
+
+.chip {
+    position: relative;
+    width: 5px;
+    height: 55px;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 3px dashed rgba(255, 255, 255, 0.5);
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(247, 249, 247);
+}
+
+.chip-face {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-family: 'Arial Black', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: inherit;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    background: transparent;
+    /* border-radius: 50%; */
+    overflow: hidden;
+}
+
+.chip:hover:not(:disabled) {
+    transform: translateY(-4px) scale(1.1);
+}
+
+.chip:active:not(:disabled) {
+    transform: translateY(-1px) scale(1.05);
+}
+
+.chip:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    filter: grayscale(100%);
+}
+
+.chip.active {
+    /* border: 3px solid #ffd700; */
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+        0 0 0 2px rgba(255, 215, 0, 0.5),
+        0 0 12px rgba(255, 215, 0, 0.4);
+}
+
+.chip-5 {
+    background: radial-gradient(circle, #ff4444, #cc0000);
+    color: white;
+}
+
+.chip-10 {
+    background: radial-gradient(circle, #ff8844, #cc4400);
+    color: white;
+}
+
+.chip-25 {
+    background: radial-gradient(circle, #44ff44, #00cc00);
+    color: white;
+}
+
+.chip-50 {
+    background: radial-gradient(circle, #4444ff, #0000cc);
+    color: white;
+}
+
+.chip-100 {
+    background: radial-gradient(circle, #aa44ff, #6600cc);
+    color: white;
+}
+
+.chip-clear {
+    background: linear-gradient(145deg, #95a5a6, #7f8c8d);
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+}
+
+.chip-clear .chip-face {
+    font-size: 14px;
+    background: transparent;
+    border-radius: 50%;
+}

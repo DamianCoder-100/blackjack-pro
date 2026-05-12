@@ -194,7 +194,7 @@ body.dark .header h1 {
 
 .score {
     font-size: 1rem;
-    color: #e0e9f2;
+    color: #b8d2eb;
 }
 
 .betting {
@@ -244,7 +244,7 @@ body.dark .header h1 {
 
 .chip {
     position: relative;
-    width: 5px;
+    width: 55px;  /* fixed: was 5px */
     height: 55px;
     aspect-ratio: 1 / 1;
     overflow: hidden;
@@ -277,26 +277,26 @@ body.dark .header h1 {
     color: inherit;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     background: transparent;
-    /* border-radius: 50%; */
     overflow: hidden;
+    pointer-events: none; /* so clicks hit .chip */
 }
 
-.chip:hover:not(:disabled) {
+.chip:hover:not(.disabled) {  /* changed from :disabled */
     transform: translateY(-4px) scale(1.1);
 }
 
-.chip:active:not(:disabled) {
+.chip:active:not(.disabled) {  /* changed from :disabled */
     transform: translateY(-1px) scale(1.05);
 }
 
-.chip:disabled {
+.chip.disabled {  /* changed from :disabled */
     opacity: 0.3;
     cursor: not-allowed;
     filter: grayscale(100%);
+    pointer-events: none;
 }
 
 .chip.active {
-    /* border: 3px solid #ffd700; */
     box-shadow:
         0 4px 8px rgba(0, 0, 0, 0.4),
         inset 0 2px 4px rgba(255, 255, 255, 0.3),
@@ -332,16 +332,13 @@ body.dark .header h1 {
 
 .chip-clear {
     background: linear-gradient(145deg, #95a5a6, #7f8c8d);
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
 }
 
 .chip-clear .chip-face {
     font-size: 14px;
     background: transparent;
-    border-radius: 50%;
 }
+
 
 .controls {
     display: grid;
@@ -651,16 +648,7 @@ body.dark .streetlamp {
     }
 }
 
- .streetlamp {
-    position: absolute;
-    bottom: 0;
-    right: 15%;
-    width: 80px;
-    height: 300px;
-    z-index: 3;
-    opacity: 0;
-    transition: opacity 0.8s ease;
-}
+
 
 body.dark .streetlamp {
     opacity: 1;
@@ -769,7 +757,6 @@ body.dark .table-image {
    background: url("pictures/daytime-city42281.png") center/cover no-repeat;
     z-index: 11;
   }
-
 
 
 .driving-car {

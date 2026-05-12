@@ -220,6 +220,134 @@ function playSound(type) {
     });
 }
 
+
+// // 2. Preload sounds once at the top
+// const dealSound = new Audio('sounds/deal-card.mp3'); // flip flip sound
+// const hitSound = new Audio('sounds/hit-me.m4a');   // single flip sound
+
+// dealSound.preload = 'auto';
+// hitSound.preload = 'auto';
+// dealSound.volume = 0.4;
+// hitSound.volume = 0.3;
+
+// // 3. Safe play function so it never crashes
+// function playCardSound(audio) {
+//     audio.currentTime = 0;
+//     audio.play().catch(() => {}); // swallows errors if browser blocks it
+// }
+
+// // 4. Hook sounds to buttons
+// dealBtn.addEventListener('click', () => {
+//     playCardSound(dealSound);
+//     // your existing dealNewHand() or whatever runs here
+// });
+
+// hitBtn.addEventListener('click', () => {
+//     playCardSound(hitSound);
+//     // your existing playerHit() or whatever runs here
+// });
+
+
+// const DEAL_SOUND_DURATION = 400; // your card-deal.m4a is probably longer, ~2 flips
+
+// dealBtn.addEventListener('click', () => {
+//     if (state.currentBet === 0) return; // your existing check
+    
+//     // 1. Lock buttons immediately
+//     dealBtn.disabled = true;
+//     hitBtn.disabled = true;
+//     standBtn.disabled = true;
+    
+//     // 2. Play deal sound first
+//     playCardSound(dealSound);
+    
+//     // 3. Deal the cards
+//     dealNewHand();
+    
+//     // 4. Check for instant blackjack after dealing
+//     const playerBlackjack = state.playerScore === 21;
+//     const dealerBlackjack = state.dealerScore === 21;
+//     const instantEnd = playerBlackjack || dealerBlackjack;
+    
+//     if (instantEnd) {
+//         setTimeout(() => {
+//             if (playerBlackjack && dealerBlackjack) {
+//                 playCardSound(pushSound); // or whatever you use for tie
+//                 showPushMessage();
+//             } else if (playerBlackjack) {
+//                 playCardSound(blackjackSound); // different from regular win?
+//                 showBlackjackMessage();
+//             } else {
+//                 playCardSound(loseSound);
+//                 showDealerBlackjackMessage();
+//             }
+//             // buttons stay disabled until next round
+//         }, DEAL_SOUND_DURATION);
+//     } else {
+//         // Normal hand: re-enable hit/stand after deal sound finishes
+//         setTimeout(() => {
+//             hitBtn.disabled = false;
+//             standBtn.disabled = false;
+//         }, DEAL_SOUND_DURATION);
+//     }
+// });
+
+
+
+
+
+// 2. Preload sounds once at the top
+const dealSound = new Audio('sounds/deal-card.mp3'); 
+const hitSound = new Audio('sounds/hit-me.m4a');   
+
+dealSound.preload = 'auto';
+hitSound.preload = 'auto';
+dealSound.volume = 0.4;
+hitSound.volume = 0.3;
+
+// 3. Safe play function
+function playCardSound(audio) {
+    audio.currentTime = 0;
+    audio.play().catch(() => {});
+}
+
+// 4. Deal button - ONLY THIS ONE, delete any other dealBtn.addEventListener
+const DEAL_SOUND_DURATION = 400; 
+
+dealBtn.addEventListener('click', () => {
+    // Play deal sound first
+    playCardSound(dealSound);
+    
+    // Run your existing deal function right here
+    // Replace 'dealNewHand()' with whatever your function is actually called
+    dealNewHand(); 
+});
+
+// 5. Hit button
+hitBtn.addEventListener('click', () => {
+    playCardSound(hitSound);
+    playerHit(); // Replace with your actual hit function name
+});
+
+
+// Background music
+const bgMusic = new Audio('sounds/blackjack-music.mp3'); // or whatever your file is
+bgMusic.loop = true;
+bgMusic.volume = 0.15; // keep it low so card sounds are louder
+bgMusic.preload = 'auto';
+
+
+// Browsers block autoplay, so start it on first click
+let musicStarted = false;
+
+document.addEventListener('click', () => {
+    if (!musicStarted) {
+        bgMusic.play().catch(() => {}); // swallows autoplay errors
+        musicStarted = true;
+    }
+}, { once: true }); // only runs once
+
+
 function createDeck() {
     const deck = [];
     suits.forEach((suit) => {
@@ -452,6 +580,7 @@ function finalizeRound(outcomeData) {
         : outcomeData.text;
 
     endRound(fullMessage, becomingGameOver ? 'gameover' : outcomeData.outcome === 'win' ? 'win' : outcomeData.outcome === 'lose' ? 'lose' : 'tie');
+    updateResetButton();
 }
 
 function dealerPlay() {
@@ -582,6 +711,21 @@ if (themeToggleBtn) {
 dealBtn.addEventListener('click', dealRound);
 hitBtn.addEventListener('click', hit);
 standBtn.addEventListener('click', stand);
-resetBtn.addEventListener('click', () => resetBoard(true));
+
+resetBtn.addEventListener('click', () => {
+    if (state.balance > 0) return; 
+    resetBoard(true);
+});
+
+function updateResetButton() {
+    if (state.balance > 0) {
+        resetBtn.classList.add('disabled');
+        resetBtn.disabled = true;
+    } else {
+        resetBtn.classList.remove('disabled');
+        resetBtn.disabled = false;
+    }
+}
 
 resetBoard();
+updateResetButton();
