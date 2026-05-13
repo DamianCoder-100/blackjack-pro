@@ -1,3 +1,10 @@
+window.addEventListener('load', () => {
+    showConfetti();
+});
+
+
+
+
 function createStarField() {
     const starsContainer = document.getElementById('stars-bg');
     if (!starsContainer) return;
@@ -96,25 +103,6 @@ const soundSettings = {
 };
 let audioCtx = null;
 
-// function applyTheme(theme) {
-//     document.body.classList.toggle('dark', theme === 'dark');
-//     document.body.classList.toggle('light', theme === 'light');
-//     themeIcon.src = theme === 'dark' ? 'pictures/moon1319.png' : 'pictures/sun59569.png';
-//     themeIcon.alt = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
-//     themeToggleBtn.classList.toggle('showing-sun', theme === 'light');
-//     localStorage.setItem('blackjack-theme', theme);
-    
-//     if (theme === 'dark') {
-//         setTimeout(() => {
-//             const car = document.querySelector('.driving-car');
-//             if (car) {
-//                 car.classList.remove('drive-in');
-//                 void car.offsetWidth;
-//                 car.classList.add('drive-in');
-//             }
-//         }, 500);
-//     }
-// }
 
 function applyTheme(theme) {
     document.body.classList.toggle('dark', theme === 'dark');
@@ -219,82 +207,6 @@ function playSound(type) {
         timeOffset += note.duration;
     });
 }
-
-
-// // 2. Preload sounds once at the top
-// const dealSound = new Audio('sounds/deal-card.mp3'); // flip flip sound
-// const hitSound = new Audio('sounds/hit-me.m4a');   // single flip sound
-
-// dealSound.preload = 'auto';
-// hitSound.preload = 'auto';
-// dealSound.volume = 0.4;
-// hitSound.volume = 0.3;
-
-// // 3. Safe play function so it never crashes
-// function playCardSound(audio) {
-//     audio.currentTime = 0;
-//     audio.play().catch(() => {}); // swallows errors if browser blocks it
-// }
-
-// // 4. Hook sounds to buttons
-// dealBtn.addEventListener('click', () => {
-//     playCardSound(dealSound);
-//     // your existing dealNewHand() or whatever runs here
-// });
-
-// hitBtn.addEventListener('click', () => {
-//     playCardSound(hitSound);
-//     // your existing playerHit() or whatever runs here
-// });
-
-
-// const DEAL_SOUND_DURATION = 400; // your card-deal.m4a is probably longer, ~2 flips
-
-// dealBtn.addEventListener('click', () => {
-//     if (state.currentBet === 0) return; // your existing check
-    
-//     // 1. Lock buttons immediately
-//     dealBtn.disabled = true;
-//     hitBtn.disabled = true;
-//     standBtn.disabled = true;
-    
-//     // 2. Play deal sound first
-//     playCardSound(dealSound);
-    
-//     // 3. Deal the cards
-//     dealNewHand();
-    
-//     // 4. Check for instant blackjack after dealing
-//     const playerBlackjack = state.playerScore === 21;
-//     const dealerBlackjack = state.dealerScore === 21;
-//     const instantEnd = playerBlackjack || dealerBlackjack;
-    
-//     if (instantEnd) {
-//         setTimeout(() => {
-//             if (playerBlackjack && dealerBlackjack) {
-//                 playCardSound(pushSound); // or whatever you use for tie
-//                 showPushMessage();
-//             } else if (playerBlackjack) {
-//                 playCardSound(blackjackSound); // different from regular win?
-//                 showBlackjackMessage();
-//             } else {
-//                 playCardSound(loseSound);
-//                 showDealerBlackjackMessage();
-//             }
-//             // buttons stay disabled until next round
-//         }, DEAL_SOUND_DURATION);
-//     } else {
-//         // Normal hand: re-enable hit/stand after deal sound finishes
-//         setTimeout(() => {
-//             hitBtn.disabled = false;
-//             standBtn.disabled = false;
-//         }, DEAL_SOUND_DURATION);
-//     }
-// });
-
-
-
-
 
 // 2. Preload sounds once at the top
 const dealSound = new Audio('sounds/deal-card.mp3'); 
@@ -493,50 +405,66 @@ function endRound(resultText, soundType) {
     playSound(soundType);
 }
 
+
 function showConfetti() {
-    const containerId = 'confetti-container';
-    let container = document.getElementById(containerId);
-    if (!container) {
-        container = document.createElement('div');
-        container.id = containerId;
-        document.body.appendChild(container);
-    }
-
-    const colors = ['#ff3b5c', '#ffb238', '#2dd4bf', '#3b82f6', '#a855f7', '#ec4899'];
-    const count = 80;
-    const pieces = [];
-
-    for (let i = 0; i < count; i++) {
-        const piece = document.createElement('div');
-        piece.className = 'confetti-piece';
-        const left = Math.random() * 100;
-        const width = Math.random() * 8 + 6;
-        const height = Math.random() * 18 + 8;
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        const delay = Math.random() * 300;
-        const duration = Math.random() * 1200 + 800;
-        const rotate = Math.random() * 360;
-
-        piece.style.left = `${left}%`;
-        piece.style.width = `${width}px`;
-        piece.style.height = `${height}px`;
-        piece.style.backgroundColor = color;
-        piece.style.opacity = '0.95';
-        piece.style.transform = `rotate(${rotate}deg)`;
-        piece.style.animationDelay = `${delay}ms`;
-        piece.style.animationDuration = `${duration}ms`;
-        piece.style.animationName = 'confetti-fall';
-        piece.style.animationTimingFunction = 'cubic-bezier(0.15, 0.84, 0.44, 1)';
-
-        container.appendChild(piece);
-        pieces.push(piece);
-    }
-
-    const cleanupTime = 2500;
-    setTimeout(() => {
-        pieces.forEach((piece) => piece.remove());
-    }, cleanupTime);
+const containerId = 'confetti-container';
+let container = document.getElementById(containerId);
+if (!container) {
+container = document.createElement('div');
+container.id = containerId;
+container.style.position = 'fixed';
+container.style.top = '0';
+container.style.left = '0';
+container.style.width = '100%';
+container.style.height = '100%';
+container.style.pointerEvents = 'none';
+container.style.overflow = 'hidden';
+container.style.zIndex = '9999';
+document.body.appendChild(container);
 }
+
+const colors = ['#ff3b5c', '#ffb238', '#2dd4bf', '#3b82f6', '#a855f7', '#ec4899'];  
+const count = 80;  
+
+for (let i = 0; i < count; i++) {  
+    const piece = document.createElement('div');  
+    piece.className = 'confetti-piece';  
+    const left = Math.random() * 100;  
+    const width = Math.random() * 8 + 6;  
+    const height = Math.random() * 18 + 8;  
+    const color = colors[Math.floor(Math.random() * colors.length)];  
+    const delay = Math.random() * 500; // spread it out more  
+    const duration = Math.random() * 3000 + 4000; // 4s to 7s fall time  
+    const rotate = Math.random() * 360;  
+    const sway = Math.random() * 100 - 50; // side-to-side drift  
+
+    piece.style.position = 'absolute';  
+    piece.style.top = '-20px';  
+    piece.style.left = `${left}%`;  
+    piece.style.width = `${width}px`;  
+    piece.style.height = `${height}px`;  
+    piece.style.backgroundColor = color;  
+    piece.style.opacity = '0.95';  
+    piece.style.setProperty('--sway', `${sway}px`);  
+    piece.style.transform = `rotate(${rotate}deg)`;  
+    piece.style.animationDelay = `${delay}ms`;  
+    piece.style.animationDuration = `${duration}ms`;  
+    piece.style.animationName = 'confetti-fall';  
+    piece.style.animationTimingFunction = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)';  
+    piece.style.animationFillMode = 'forwards';  
+
+    container.appendChild(piece);  
+    setTimeout(() => piece.remove(), duration + delay + 200);  
+}  
+
+setTimeout(() => {  
+    if (container && container.children.length === 0) container.remove();  
+}, 8000);
+
+}
+
+
+
 
 function compareHands() {
     const playerScore = getScore(state.player);

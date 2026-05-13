@@ -5,14 +5,14 @@
 :root {
     color-scheme: light;
     --bg: radial-gradient(circle at top, #e3e8f1 0%, #d2d9e3 48%, #b8c2d1 100%);
-    --surface: rgba(235, 239, 245, 0.95);
+    --surface: rgba(21, 20, 21, 0.602);
     --surface-strong: rgba(230, 236, 243, 0.98);
-    --text: #15202b;
-    --muted: #596675;
-    --border: rgba(20, 30, 45, 0.16);
-    --panel: rgba(180, 200, 230, 0.85);
+    --text: #dfe8f1;
+    --muted: #e1e9f2;
+    --border: rgba(0, 0, 0, 0.16);
+    --panel: rgba(180, 200, 230, 0.484);
     --panel-border: rgba(20, 30, 45, 0.14);
-    --button-bg: #0c81ff;
+    --button-bg: #6796f3;
     --button-text: #ffffff;
     --button-surface: rgba(230, 236, 243, 0.95);
     --table-bg: url("pictures/green-table.jpg");
@@ -21,7 +21,7 @@
 body.dark {
     color-scheme: dark;
     --bg: radial-gradient(circle at top, #17212b 0%, #0d141d 45%, #05080f 100%);
-    --surface: rgba(10, 18, 28, 0.95);
+    --surface: rgba(10, 18, 28, 0.845);
     --surface-strong: rgba(10, 18, 28, 0.98);
     --text: #f5f5f5;
     --muted: #c8d2e0;
@@ -377,7 +377,7 @@ button:disabled {
 }
 
 button#reset-btn {
-    background: #3a3f56;
+    background: #d4380cb8;
 }
 
 .status {
@@ -394,6 +394,9 @@ button#reset-btn {
     color: #e5f3ff;
 }
 
+
+
+/* ====================CONFETTI========================== */
 #confetti-container {
     position: fixed;
     top: 0;
@@ -410,6 +413,17 @@ button#reset-btn {
     top: -10%;
     border-radius: 2px;
     will-change: transform, opacity;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(120vh) translateX(var(--sway)) rotate(720deg);
+        opacity: 0;
+    }
 }
 
 @keyframes broken-neon {
