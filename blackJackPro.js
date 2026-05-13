@@ -1,6 +1,6 @@
-window.addEventListener('load', () => {
-    showConfetti();
-});
+// window.addEventListener('load', () => {
+//     showConfetti();
+// });
 
 
 
