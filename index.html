@@ -1,81 +1,236 @@
-<!DOCTYPE html>
-<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blackjack Pro</title>
     <link rel="stylesheet" href="blackJackPro.css">
+    <style>
+        /* Front page styles */
+        .front-page {
+            position: fixed;
+            inset: 0;
+            background: #0a0a0f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        
+        .front-page.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Broken neon text effect */
+        .neon-title {
+            font-size: 5rem;
+            font-weight: 900;
+            font-family: 'Arial Black', sans-serif;
+            letter-spacing: 4px;
+            color: #fff;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            position: relative;
+            text-shadow: 
+                0 0 5px #ff0080,
+                0 0 10px #ff0080,
+                0 0 20px #ff0080,
+                0 0 40px #ff0080,
+                0 0 80px #ff0080;
+            animation: flicker 3s infinite alternate;
+        }
+
+        /* Broken letters - flicker more */
+        .neon-title .broken {
+            animation: broken-flicker 2s infinite alternate;
+            opacity: 0.8;
+        }
+
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow: 
+                    0 0 4px #ff0080,
+                    0 0 11px #ff0080,
+                    0 0 19px #ff0080,
+                    0 0 40px #ff0080,
+                    0 0 80px #ff0080,
+                    0 0 90px #ff0080;
+            }
+            20%, 24%, 55% {       
+                text-shadow: none;
+            }
+        }
+
+        @keyframes broken-flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                opacity: 0.2;
+                text-shadow: none;
+            }
+            20%, 24%, 55% {       
+                opacity: 1;
+                text-shadow: 
+                    0 0 5px #ff0080,
+                    0 0 10px #ff0080,
+                    0 0 20px #ff0080;
+            }
+        }
+
+        /* Jacks fan container */
+        .jacks-fan {
+            position: relative;
+            width: 280px;
+            height: 200px;
+            margin-bottom: 3rem;
+            filter: drop-shadow(0 0 15px #00f7ff);
+        }
+
+        /* Neon border around jacks */
+        .jacks-fan::before {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            border: 3px solid #00f7ff;
+            border-radius: 20px;
+            box-shadow: 
+                0 0 10px #00f7ff,
+                inset 0 0 10px #00f7ff,
+                0 0 20px #00f7ff,
+                0 0 40px #00f7ff;
+            animation: neon-pulse 1.5s infinite alternate;
+        }
+
+        @keyframes neon-pulse {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        /* Individual jacks */
+        .jack {
+            position: absolute;
+            width: 80px;
+            height: 120px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 2px solid #f8fafc;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff0080;
+            text-shadow: 0 0 8px #ff0080;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            transform-origin: bottom center;
+        }
+
+        .jack::before {
+            content: 'J';
+            position: absolute;
+            top: 6px;
+            left: 8px;
+            font-size: 1rem;
+        }
+
+        .jack::after {
+            content: '♠';
+            position: absolute;
+            bottom: 6px;
+            right: 8px;
+            font-size: 1rem;
+            transform: rotate(180deg);
+        }
+
+        /* Fan positioning - 4 jacks */
+        .jack:nth-child(1) { 
+            transform: rotate(-25deg) translateX(-20px);
+            z-index: 1;
+        }
+        .jack:nth-child(2) { 
+            transform: rotate(-8deg) translateX(-5px);
+            z-index: 2;
+        }
+        .jack:nth-child(3) { 
+            transform: rotate(8deg) translateX(5px);
+            z-index: 3;
+        }
+        .jack:nth-child(4) { 
+            transform: rotate(25deg) translateX(20px);
+            z-index: 4;
+            color: #00f7ff;
+            text-shadow: 0 0 8px #00f7ff;
+        }
+
+        .jack:nth-child(4)::after { content: '♥'; }
+        
+        .play-btn {
+            background: transparent;
+            color: #00f7ff;
+            border: 2px solid #00f7ff;
+            padding: 1rem 3rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 0 10px #00f7ff,
+                inset 0 0 10px #00f7ff;
+            text-shadow: 0 0 8px #00f7ff;
+        }
+        
+        .play-btn:hover {
+            background: #00f7ff;
+            color: #0a0a0f;
+            box-shadow: 
+                0 0 20px #00f7ff,
+                0 0 40px #00f7ff;
+            transform: scale(1.05);
+        }
+
+        .game-wrapper { display: none; }
+        .game-wrapper.active { display: block; }
+    </style>
 </head>
 
 <body>
-    <div class="stars-container" id="stars-bg"></div>
-    <div class="app-shell game-container">
-        <header class="header">
-            <div class="header-top">
-                <div>
-                    <h1>Blackjack Pro</h1>
-                    <p>Play a quick round against the dealer. Bet with chips and watch the deck reshuffle only when 15
-                        cards remain.</p>
-                </div>
-                <div class="theme-switcher">
-                    <button id="theme-toggle" type="button" aria-label="Toggle theme">
-                        <img id="theme-icon" src="pictures/moon1319.png" alt="Toggle theme">
-                    </button>
-                </div>
-            </div>
-        </header>
-        <main class="game-board">
-            <section class="hand-panel dealer-panel">
-                <h2>Dealer</h2>
-                <div id="dealer-cards" class="cards"></div>
-                <div class="score">Score: <span id="dealer-score">0</span></div>
-            </section>
-            <section class="hand-panel player-panel">
-                <h2>You</h2>
-                <div id="player-cards" class="cards"></div>
-                <div class="score">Score: <span id="player-score">0</span></div>
-            </section>
-        </main>
-        <section class="betting">
-            <div class="bet-info">
-                <div class="wallet">Bankroll: <strong id="balance-display">$1000.00</strong></div>
-                <div class="wallet">Current Bet: <strong id="bet-display">$0.00</strong></div>
-            </div>
-            <div class="chip-tray" id="chip-buttons">
-    <div class="chip chip-5" data-value="5">
-        <div class="chip-face">$5</div>
+    <!-- Front Page -->
+    <div class="front-page" id="front-page">
+        <h1 class="neon-title">
+            Bl<span class="broken">a</span>ck<span class="broken">j</span>ack
+        </h1>
+        
+        <div class="jacks-fan">
+            <div class="jack">♠</div>
+            <div class="jack">♣</div>
+            <div class="jack">♦</div>
+            <div class="jack">♥</div>
+        </div>
+<a href="blackJackPro.html">
+
+    <button class="play-btn" id="play-game-btn">Play Game</button>
+</a>
     </div>
-    <div class="chip chip-10" data-value="10">
-        <div class="chip-face">$10</div>
+
+    <!-- Rest of your game wrapped in game-wrapper stays the same -->
+    <div class="game-wrapper" id="game-wrapper">
+        <!-- ... your existing game HTML ... -->
     </div>
-    <div class="chip chip-25" data-value="25">
-        <div class="chip-face">$25</div>
-    </div>
-    <div class="chip chip-50" data-value="50">
-        <div class="chip-face">$50</div>
-    </div>
-    <div class="chip chip-100" data-value="100">
-        <div class="chip-face">$100</div>
-    </div>
-    <div class="chip chip-clear" data-value="clear">
-        <div class="chip-face">CLR</div>
-    </div>
-</div>
-        </section>
-        <section class="controls">
-            <div class="button-row">
-                <button id="deal-btn" disabled>Deal</button>
-                <button id="hit-btn" disabled>Hit</button>
-                <button id="stand-btn" disabled>Stand</button>
-                <button id="reset-btn">Reset</button>
-            </div>
-            <div class="status">
-                <p id="message">Select chips to set your bet, then press Deal.</p>
-            </div>
-        </section>
-    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const playBtn = document.getElementById('play-game-btn');
+            const frontPage = document.getElementById('front-page');
+            const gameWrapper = document.getElementById('game-wrapper');
+            
+            playBtn.addEventListener('click', () => {
+                frontPage.classList.add('hidden');
+                gameWrapper.classList.add('active');
+            });
+        });
+    </script>
     <script src="blackJackPro.js"></script>
 </body>
-
-</html>

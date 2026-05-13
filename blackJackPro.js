@@ -243,7 +243,7 @@ hitBtn.addEventListener('click', () => {
 
 
 // Background music
-const bgMusic = new Audio('sounds/blackjack-music.mp3'); // or whatever your file is
+const bgMusic = new Audio('sounds/game-song3.m4a'); // or whatever your file is
 bgMusic.loop = true;
 bgMusic.volume = 0.15; // keep it low so card sounds are louder
 bgMusic.preload = 'auto';
