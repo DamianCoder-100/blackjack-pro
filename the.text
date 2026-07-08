@@ -90,11 +90,10 @@ body.dark .header h1 {
     color: var(--muted);
 }
 
-/* Updated Responsive theme button placement */
 .theme-switcher {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 100px;
+    right: 100px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -102,12 +101,11 @@ body.dark .header h1 {
 }
 
 #theme-toggle {
-    width: 60px;
-    height: 60px;
+    width: 200px;
+    height: 200px;
     border: none;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(4px);
+    background: transparent;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -121,17 +119,17 @@ body.dark .header h1 {
 }
 
 #theme-toggle img {
-    width: 35px;
-    height: 35px;
+    width: 120px;
+    height: 120px;
     display: block;
     transition: filter 300ms ease;
 }
 
 #theme-toggle.showing-sun img {
-    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.7));
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.7)) drop-shadow(0 0 40px rgba(255, 200, 0, 0.4));
 }
 
-/* .game-board {
+.game-board {
     display: grid;
     gap: 20px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -144,33 +142,6 @@ body.dark .header h1 {
     background-repeat: no-repeat;
     border: 4px solid rgba(255, 255, 255, 0.16);
     box-shadow: 0 26px 70px rgba(0, 0, 0, 0.35);
-} */
-
- .game-board {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    
-    /* 1. This centers the items horizontally inside their column tracks */
-    justify-items: center; 
-    
-    /* 2. Optional: This centers them vertically if your rows have extra height */
-    align-items: center; 
-
-    margin-bottom: 22px;
-    padding: 22px;
-    border-radius: 30px;
-    background-image: var(--table-bg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border: 4px solid rgba(255, 255, 255, 0.16);
-    box-shadow: 0 26px 70px rgba(0, 0, 0, 0.35);
-}
-
-/* Replace .game-item with whatever class name your cards/pieces use */
-.game-item {
-    margin: 0 auto; 
 }
 
 .hand-panel {
@@ -244,7 +215,7 @@ body.dark .header h1 {
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 18px;
     padding: 12px 16px;
-    min-width: 140px;
+    min-width: 180px;
     text-align: center;
     color: #c8d2e0;
 }
@@ -264,7 +235,6 @@ body.dark .header h1 {
 /* ===== CHIP TRAY ===== */
 .chip-tray {
     display: flex;
-    flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
     margin-bottom: 15px;
@@ -274,7 +244,7 @@ body.dark .header h1 {
 
 .chip {
     position: relative;
-    width: 55px;  
+    width: 55px;  /* fixed: was 5px */
     height: 55px;
     aspect-ratio: 1 / 1;
     overflow: hidden;
@@ -308,18 +278,18 @@ body.dark .header h1 {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     background: transparent;
     overflow: hidden;
-    pointer-events: none; 
+    pointer-events: none; /* so clicks hit .chip */
 }
 
-.chip:hover:not(.disabled) {  
+.chip:hover:not(.disabled) {  /* changed from :disabled */
     transform: translateY(-4px) scale(1.1);
 }
 
-.chip:active:not(.disabled) {  
+.chip:active:not(.disabled) {  /* changed from :disabled */
     transform: translateY(-1px) scale(1.05);
 }
 
-.chip.disabled {  
+.chip.disabled {  /* changed from :disabled */
     opacity: 0.3;
     cursor: not-allowed;
     filter: grayscale(100%);
@@ -335,13 +305,40 @@ body.dark .header h1 {
         0 0 12px rgba(255, 215, 0, 0.4);
 }
 
-.chip-5 { background: radial-gradient(circle, #ff4444, #cc0000); color: white; }
-.chip-10 { background: radial-gradient(circle, #ff8844, #cc4400); color: white; }
-.chip-25 { background: radial-gradient(circle, #44ff44, #00cc00); color: white; }
-.chip-50 { background: radial-gradient(circle, #4444ff, #0000cc); color: white; }
-.chip-100 { background: radial-gradient(circle, #aa44ff, #6600cc); color: white; }
-.chip-clear { background: linear-gradient(145deg, #95a5a6, #7f8c8d); }
-.chip-clear .chip-face { font-size: 14px; background: transparent; }
+.chip-5 {
+    background: radial-gradient(circle, #ff4444, #cc0000);
+    color: white;
+}
+
+.chip-10 {
+    background: radial-gradient(circle, #ff8844, #cc4400);
+    color: white;
+}
+
+.chip-25 {
+    background: radial-gradient(circle, #44ff44, #00cc00);
+    color: white;
+}
+
+.chip-50 {
+    background: radial-gradient(circle, #4444ff, #0000cc);
+    color: white;
+}
+
+.chip-100 {
+    background: radial-gradient(circle, #aa44ff, #6600cc);
+    color: white;
+}
+
+.chip-clear {
+    background: linear-gradient(145deg, #95a5a6, #7f8c8d);
+}
+
+.chip-clear .chip-face {
+    font-size: 14px;
+    background: transparent;
+}
+
 
 .controls {
     display: grid;
@@ -351,16 +348,16 @@ body.dark .header h1 {
 .button-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 14px;
     justify-content: center;
 }
 
 button {
     border: none;
     border-radius: 999px;
-    min-width: 100px;
-    padding: 12px 18px;
-    font-size: 0.95rem;
+    min-width: 120px;
+    padding: 14px 20px;
+    font-size: 1rem;
     font-weight: 600;
     transition: transform 150ms ease, background-color 150ms ease, opacity 150ms ease;
     cursor: pointer;
@@ -385,7 +382,7 @@ button#reset-btn {
 
 .status {
     text-align: center;
-    padding: 14px 16px;
+    padding: 16px 18px;
     border-radius: 18px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -393,10 +390,13 @@ button#reset-btn {
 
 .status p {
     margin: 0;
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: #e5f3ff;
 }
 
+
+
+/* ====================CONFETTI========================== */
 #confetti-container {
     position: fixed;
     top: 0;
@@ -416,8 +416,14 @@ button#reset-btn {
 }
 
 @keyframes confetti-fall {
-    0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(120vh) translateX(var(--sway)) rotate(720deg); opacity: 0; }
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(120vh) translateX(var(--sway)) rotate(720deg);
+        opacity: 0;
+    }
 }
 
 @keyframes broken-neon {
@@ -434,15 +440,28 @@ button#reset-btn {
 }
 
 @keyframes twinkle {
-    0%, 100% { opacity: 0.2; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.3); }
+    0%, 100% { 
+        opacity: 0.2; 
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.3);
+    }
 }
 
 @keyframes shoot {
-    0% { transform: translateX(0) translateY(0); opacity: 1; }
-    100% { transform: translateX(-300px) translateY(300px); opacity: 0; }
+    0% {
+        transform: translateX(0) translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-300px) translateY(300px);
+        opacity: 0;
+    }
 }
 
+/* ===== TWINKLING STARS BACKGROUND ===== */
 .stars-container {
     position: fixed;
     inset: 0;
@@ -453,26 +472,84 @@ button#reset-btn {
     transition: opacity 0.8s ease;
 }
 
-body.dark .stars-container { opacity: 1; }
-.star { position: absolute; background: white; border-radius: 50%; box-shadow: 0 0 4px rgba(255, 255, 255, 0.8); animation: twinkle 3s infinite ease-in-out; z-index: 1; }
-.shooting-star { position: absolute; width: 2px; height: 2px; background: linear-gradient(90deg, white, transparent); border-radius: 50%; animation: shoot 3s linear infinite; opacity: 0; z-index: 1; }
-.moon { position: absolute; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #f7f7ff 0%, #d2d5ff 35%, #8a92c2 100%); box-shadow: 0 0 60px rgba(238, 238, 255, 0.35); filter: blur(0.2px); z-index: 0; }
-.cloud { position: absolute; pointer-events: none; animation: floatCloud ease-in-out infinite; z-index: 2; }
-
-@keyframes floatCloud {
-    0% { transform: translateX(100vw) translateY(0px); }
-    25% { transform: translateX(75vw) translateY(-40px); }
-    50% { transform: translateX(50vw) translateY(40px); }
-    75% { transform: translateX(25vw) translateY(-20px); }
-    100% { transform: translateX(-300px) translateY(0px); }
+body.dark .stars-container {
+    opacity: 1;
 }
 
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+    animation: twinkle 3s infinite ease-in-out;
+    z-index: 1;
+}
+
+/* Shooting star variant */
+.shooting-star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: linear-gradient(90deg, white, transparent);
+    border-radius: 50%;
+    animation: shoot 3s linear infinite;
+    opacity: 0;
+    z-index: 1;
+}
+
+.moon {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #f7f7ff 0%, #d2d5ff 35%, #8a92c2 100%);
+    box-shadow: 0 0 60px rgba(238, 238, 255, 0.35);
+    filter: blur(0.2px);
+    z-index: 0;
+}
+
+.cloud {
+    position: absolute;
+    pointer-events: none;
+    animation: floatCloud ease-in-out infinite;
+    z-index: 2;
+}
+
+@keyframes floatCloud {
+    0% {
+        transform: translateX(100vw) translateY(0px);
+    }
+    25% {
+        transform: translateX(75vw) translateY(-40px);
+    }
+    50% {
+        transform: translateX(50vw) translateY(40px);
+    }
+    75% {
+        transform: translateX(25vw) translateY(-20px);
+    }
+    100% {
+        transform: translateX(-300px) translateY(0px);
+    }
+}
+
+/* Make sure game content is above stars */
 .game-container {
     position: relative;
-    top: 0; /* Changed from -100px so it fits properly on modern viewports */
+    top: -100px;
     z-index: 10;
 }
 
+@media (max-width: 760px) {
+    .game-board {
+        grid-template-columns: 1fr;
+    }
+    .card {
+        width: 64px;
+        height: 88px;
+    }
+}
+
+
+/* ===== STREETLAMP ===== */
 .streetlamp {
     position: absolute;
     bottom: 0;
@@ -484,10 +561,37 @@ body.dark .stars-container { opacity: 1; }
     transition: opacity 0.8s ease;
 }
 
-body.dark .streetlamp { opacity: 1; }
-.lamp-post { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 8px; height: 220px; background: linear-gradient(90deg, #2c3e50, #34495e, #2c3e50); border-radius: 4px; box-shadow: 2px 0 4px rgba(0,0,0,0.4); }
-.lamp-head { position: absolute; bottom: 220px; left: 50%; transform: translateX(-50%); width: 40px; height: 30px; background: #1a252f; border-radius: 8px 8px 4px 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.5); }
+body.dark .streetlamp {
+    opacity: 1;
+}
 
+/* The pole */
+.lamp-post {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 220px;
+    background: linear-gradient(90deg, #2c3e50, #34495e, #2c3e50);
+    border-radius: 4px;
+    box-shadow: 2px 0 4px rgba(0,0,0,0.4);
+}
+
+/* The lamp head */
+.lamp-head {
+    position: absolute;
+    bottom: 220px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 30px;
+    background: #1a252f;
+    border-radius: 8px 8px 4px 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+/* The light bulb glow */
 .light-glow {
     position: absolute;
     bottom: 215px;
@@ -497,23 +601,34 @@ body.dark .streetlamp { opacity: 1; }
     height: 20px;
     background: radial-gradient(circle, #fff9c4, #ffd700);
     border-radius: 50%;
-    box-shadow: 0 0 20px #ffd700, 0 0 40px rgba(255, 215, 0, 0.6), 0 0 80px rgba(255, 215, 0, 0.3);
+    box-shadow: 
+        0 0 20px #ffd700,
+        0 0 40px rgba(255, 215, 0, 0.6),
+        0 0 80px rgba(255, 215, 0, 0.3);
     animation: flicker 4s infinite alternate;
 }
 
+/* FIXED: Light cone - narrow at top, wide at bottom */
 .light-cone {
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 240px; 
+    width: 240px;  /* Wide at bottom */
     height: 220px;
-    background: linear-gradient(to bottom, rgba(255, 248, 220, 0.25) 0%, rgba(255, 248, 220, 0.15) 30%, rgba(255, 248, 220, 0.08) 60%, transparent 100%);
-    clip-path: polygon(45% 0%, 55% 0%, 100% 100%, 0% 100%); 
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 248, 220, 0.25) 0%,  /* Bright at top near bulb */
+        rgba(255, 248, 220, 0.15) 30%,
+        rgba(255, 248, 220, 0.08) 60%,
+        transparent 100%              /* Fade out at ground */
+    );
+    clip-path: polygon(45% 0%, 55% 0%, 100% 100%, 0% 100%); /* Trapezoid shape */
     filter: blur(12px);
     pointer-events: none;
 }
 
+/* Extra glow at the top of cone near bulb */
 .light-cone::before {
     content: '';
     position: absolute;
@@ -522,17 +637,141 @@ body.dark .streetlamp { opacity: 1; }
     transform: translateX(-50%);
     width: 30px;
     height: 40px;
-    background: radial-gradient(ellipse at 50% 0%, rgba(255, 248, 220, 0.4) 0%, transparent 70%);
+    background: radial-gradient(
+        ellipse at 50% 0%, 
+        rgba(255, 248, 220, 0.4) 0%, 
+        transparent 70%
+    );
     filter: blur(8px);
 }
 
 @keyframes flicker {
-    0%, 100% { opacity: 1; box-shadow: 0 0 20px #ffd700, 0 0 40px rgba(255, 215, 0, 0.6), 0 0 80px rgba(255, 215, 0, 0.3); }
-    50% { opacity: 0.9; box-shadow: 0 0 15px #ffd700, 0 0 30px rgba(255, 215, 0, 0.5), 0 0 60px rgba(255, 215, 0, 0.2); }
+    0%, 100% { 
+        opacity: 1; 
+        box-shadow: 
+            0 0 20px #ffd700,
+            0 0 40px rgba(255, 215, 0, 0.6),
+            0 0 80px rgba(255, 215, 0, 0.3);
+    }
+    50% { 
+        opacity: 0.9; 
+        box-shadow: 
+            0 0 15px #ffd700,
+            0 0 30px rgba(255, 215, 0, 0.5),
+            0 0 60px rgba(255, 215, 0, 0.2);
+    }
 }
 
-body.dark .table-image { filter: drop-shadow(-40px 0 60px rgba(255, 248, 220, 0.15)); }
-.table-image { background: url("pictures/daytime-city42281.png") center/cover no-repeat; z-index: 11; }
+
+
+body.dark .streetlamp {
+    opacity: 1;
+}
+
+/* The pole */
+.lamp-post {
+    position: absolute;
+    bottom: 17px;
+    right: -173px;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 170px;
+    background: linear-gradient(90deg, #2c3e50, #34495e, #2c3e50);
+    border-radius: 4px;
+    box-shadow: 2px 0 4px rgba(0,0,0,0.4);
+}
+
+/* The lamp head */
+.lamp-head {
+    position: absolute;
+    bottom: 159px;
+    right: -188px;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 30px;
+    background: #1a252f;
+    border-radius: 8px 8px 4px 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+/* The light bulb glow */
+.light-glow {
+    position: absolute;
+    bottom: 149px;
+    right: -168px;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, #fff9c4, #ffd700);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 20px #ffd700,
+        0 0 40px rgba(255, 215, 0, 0.6),
+        0 0 80px rgba(255, 215, 0, 0.3);
+    animation: flicker 4s infinite alternate;
+}
+
+/* The light cone shining down */
+.light-cone {
+    position: absolute;
+    bottom: 1px;
+    right: -398px;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 120px solid transparent;
+    border-right: 120px solid transparent;
+    border-top: 220px solid rgba(255, 248, 220, 0.12);
+    filter: blur(8px);
+    pointer-events: none;
+}
+
+.light-cone::before {
+    content: '';
+    position: absolute;
+    top: -220px;
+    left: -120px;
+    width: 240px;
+    height: 220px;
+    background: radial-gradient(
+        ellipse at 50% 0%, 
+        rgba(255, 248, 220, 0.2) 0%, 
+        rgba(255, 248, 220, 0.411) 40%,
+        transparent 70%
+    );
+}
+
+/* Subtle flicker animation */
+@keyframes flicker {
+    0%, 100% { 
+        opacity: 1; 
+        box-shadow: 
+            0 0 20px #ffd700,
+            0 0 40px rgba(255, 215, 0, 0.6),
+            0 0 80px rgba(255, 215, 0, 0.3);
+    }
+    50% { 
+        opacity: 0.9; 
+        box-shadow: 
+            0 0 15px #ffd700,
+            0 0 30px rgba(255, 215, 0, 0.5),
+            0 0 60px rgba(255, 215, 0, 0.2);
+    }
+}
+
+/* Make table look lit by the lamp */
+body.dark .table-image {
+    filter: drop-shadow(-40px 0 60px rgba(255, 248, 220, 0.15));
+}
+
+
+
+  .table-image {
+   
+   background: url("pictures/daytime-city42281.png") center/cover no-repeat;
+    z-index: 11;
+  }
+
 
 .driving-car {
     position: fixed;
@@ -545,7 +784,9 @@ body.dark .table-image { filter: drop-shadow(-40px 0 60px rgba(255, 248, 220, 0.
     pointer-events: none;
 }
 
-body.dark .driving-car { opacity: 1; }
+body.dark .driving-car {
+    opacity: 1;
+}
 
 @keyframes drive-bounce {
     0% { transform: translateX(0); }
@@ -556,118 +797,52 @@ body.dark .driving-car { opacity: 1; }
     100% { transform: translateX(calc(-100vw - 500px)) translateY(0); }
 }
 
-.driving-car.drive-in { animation: drive-bounce 20s ease-out forwards; }
+.driving-car.drive-in {
+    animation: drive-bounce 20s ease-out forwards;
+}
 
+
+
+.driving-car {
+    position: fixed;
+    bottom: 40px;
+    right: -400px;
+    width: 250px;
+    height: auto;
+    z-index: -6;
+    opacity: 0;
+    pointer-events: none;
+}
+
+body.dark .driving-car {
+    opacity: 1;
+}
+
+/* Infinite drive-by with bounce each loop */
 @keyframes drive-loop {
-    0% { transform: translateX(0) translateY(0); }
-    70% { transform: translateX(calc(-100vw - 500px)) translateY(0); }
-    75% { transform: translateX(calc(-100vw - 450px)) translateY(-15px); }
-    80% { transform: translateX(calc(-100vw - 500px)) translateY(0); }
-    85% { transform: translateX(calc(-100vw - 480px)) translateY(-8px); }
-    90% { transform: translateX(calc(-100vw - 500px)) translateY(0); }
-    100% { transform: translateX(calc(-100vw - 800px)) translateY(0); }
-}
-
-.driving-car.drive-infinite { animation: drive-loop 10s linear infinite; }
-
-/* ==================== GLOBAL MEDIA RESPONSIVENESS OVERRIDES ==================== */
-@media (max-width: 760px) {
-    body {
-        padding: 10px;
+    0% {
+        transform: translateX(0) translateY(0);
     }
-
-    .app-shell {
-        padding: 16px;
-        border-radius: 16px;
+    70% {
+        transform: translateX(calc(-100vw - 500px)) translateY(0);
     }
-
-    .theme-switcher {
-        top: 10px;
-        right: 10px;
+    75% {
+        transform: translateX(calc(-100vw - 450px)) translateY(-15px); /* Bounce up */
     }
-
-    #theme-toggle {
-        width: 44px;
-        height: 44px;
+    80% {
+        transform: translateX(calc(-100vw - 500px)) translateY(0); /* Slam down */
     }
-
-    #theme-toggle img {
-        width: 24px;
-        height: 24px;
+    85% {
+        transform: translateX(calc(-100vw - 480px)) translateY(-8px); /* Small bounce */
     }
-
-    .game-board {
-        grid-template-columns: 1fr;
-        padding: 12px;
-        border-radius: 20px;
+    90% {
+        transform: translateX(calc(-100vw - 500px)) translateY(0); /* Settle */
     }
-
-    .hand-panel {
-        padding: 14px;
-        min-height: auto;
-    }
-
-    .cards {
-        justify-content: center;
-        gap: 8px;
-    }
-
-    .card {
-        width: 62px;
-        height: 84px;
-        border-radius: 10px;
-        padding: 4px;
-    }
-
-    .wallet {
-        min-width: 120px;
-        padding: 8px 12px;
-        font-size: 0.9rem;
-    }
-
-    .chip {
-        width: 48px;
-        height: 48px;
-        font-size: 12px;
-    }
-
-    .chip-face {
-        font-size: 12px;
-    }
-
-    .button-row button {
-        flex: 1 1 calc(50% - 10px); /* Buttons split into rows of two on mobile */
-        padding: 12px;
-        font-size: 0.9rem;
-    }
-
-    /* Keep hidden decorative assets completely off tiny touchscreens */
-    .streetlamp, .driving-car {
-        display: none !important;
+    100% {
+        transform: translateX(calc(-100vw - 800px)) translateY(0); /* Drive off left */
     }
 }
 
-
-.volume-control {
-    max-width: 300nt px;
-    margin: 0 auto;
-    padding: 8px 16px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-#volume-slider {
-    flex: 1;
-    cursor: pointer;
-    accent-color: #0c81ff; /* Matches your blue action buttons */
-    height: 6px;
-    border-radius: 3px;
-}
-
-#volume-pct {
-    min-width: 40px;
-    font-size: 0.85rem;
-    color: var(--muted);
-    text-align: right;
-}
+.driving-car.drive-infinite {
+    animation: drive-loop 10s linear infinite;
+} 
