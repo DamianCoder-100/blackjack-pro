@@ -1,0 +1,16 @@
+{
+  "short_name": "BlackjackPro",
+  "name": "Kamron Jazz Blackjack Pro",
+  "icons": [
+    {
+      "src": "pictures/blackJack_2.0.png",
+      "type": "image/jpeg",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "display": "standalone",
+  "orientation": "portrait"
+}
